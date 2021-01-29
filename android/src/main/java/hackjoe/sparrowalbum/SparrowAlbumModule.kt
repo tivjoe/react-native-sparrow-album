@@ -5,7 +5,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 
-class SparrowAlbumModule(private var reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+class SparrowAlbumModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     companion object {
         private const val DURATION_SHORT_KEY = "SHORT"
         private const val DURATION_LONG_KEY = "LONG"
