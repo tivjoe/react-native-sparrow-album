@@ -1,5 +1,4 @@
-import { NativeModules } from 'react-native';
+import { requireNativeComponent, NativeModules } from 'react-native';
 
-const { SparrowAlbum } = NativeModules;
-
-export default SparrowAlbum;
+export const SparrowAlbumView = requireNativeComponent('RCTSparrowAlbum')
+export const SparrowAlbum = NativeModules.SparrowAlbum;

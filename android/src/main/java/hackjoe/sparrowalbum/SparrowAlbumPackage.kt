@@ -8,7 +8,7 @@ import com.facebook.react.uimanager.ViewManager
 class SparrowAlbumPackage : ReactPackage {
 
     override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-        return listOf()
+        return listOf(SparrowAlbumManager())
     }
 
     override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
