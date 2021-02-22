@@ -94,4 +94,9 @@ object MediaUtil {
         return videoList
     }
 
+    /**
+     * 获取媒体类型
+     */
+    fun getMediaType(mimeType: String) = mimeType.split("/")[0]
+
 }
