@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class AlbumAdapter(
         private val context: Context,
+        private val albumView: AlbumView,
         private val albumDataManager: AlbumDataManager
 ) : RecyclerView.Adapter<AlbumAdapter.AlbumHolder>() {
 
@@ -66,11 +67,15 @@ class AlbumAdapter(
         // 混选
         val isFullMediaBefore = albumDataManager.overfullMedia()  // 在未改变数据源前就已经满了为true
         val selectedMediaTypeBefore = albumDataManager.getSelectedMediaType() //获取已经选中map媒体类型
-        albumDataManager.selectMedia(position) // 修改数据源
+        // 尝试修改被选中媒体数据源，如果修改成功，则将修改后的被选中媒体整个返回给js端
+        if (albumDataManager.selectMedia(position)) {
+            albumView.emitEventChangeSelectedMedias()
+        }
         if (albumDataManager.overfullMedia() || selectedMediaTypeBefore == "empty" || albumDataManager.getSelectedMediaType() == "empty") {
             notifyDataSetChanged()
         } else {
-            if (isFullMediaBefore) { // true为代表已经选满了的情况下，用户取消选中一个item，变成未满的情况，则刷新所有item
+            // true为代表已经选满了的情况下，用户取消选中一个item，变成未满的情况，则刷新所有item
+            if (isFullMediaBefore) {
                 notifyDataSetChanged()
             } else {
                 notifyItemChanged(position)

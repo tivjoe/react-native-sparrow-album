@@ -18,23 +18,32 @@ class AlbumDataManager(context: Context) {
     }
 
     /**
+     * 获取被选中的媒体数据
+     */
+    fun getSelectedMedias(): MutableMap<Long, AlbumItemData> {
+        return selectedMedias
+    }
+
+    /**
      * 选择媒体
      * @param position mediaList的索引
+     * 如果被选中媒体数据发生变化则返回true
      */
-    fun selectMedia(position: Int) {
+    fun selectMedia(position: Int): Boolean {
         val key = mediaList[position].id
         // 当前要添加的media和已经选中media类型不一致的话，不添加
         if (getSelectedMediaType() != "empty") {
             if (MediaUtil.getMediaType(mediaList[position].mimeType) != getSelectedMediaType()) {
-                return
+                return false
             }
         }
         if (containsMedia(position)) {
             selectedMedias.remove(key)
         } else {
-            if (overfullMedia()) return
+            if (overfullMedia()) return false
             selectedMedias[key] = mediaList[position]
         }
+        return true
     }
 
     /**

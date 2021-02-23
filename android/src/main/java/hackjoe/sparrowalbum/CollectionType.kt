@@ -20,3 +20,10 @@ data class AlbumItemData(
         val duration: Int?,
         val createDate: Long
 )
+
+/**
+ * Rn事件名
+ */
+object RnEvent {
+    const val EVENT_ON_CHANGE_SELECTED_MEDIAS = "sparrow_album_change_selected_medias"
+}
