@@ -2,8 +2,9 @@ package hackjoe.sparrowalbum
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
+import com.facebook.react.bridge.ReactMethod
 
-class SparrowAlbumModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+class SparrowAlbumModule(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     companion object {
         private const val REACT_CLASS = "SparrowAlbum"
@@ -17,4 +18,10 @@ class SparrowAlbumModule(reactContext: ReactApplicationContext) : ReactContextBa
         val constants: MutableMap<String, Any> = mutableMapOf()
         return constants
     }
+
+    @ReactMethod
+    fun previewSelectedMedias() {
+        MediaUtil.previewSelectedMedias(reactContext)
+    }
+
 }

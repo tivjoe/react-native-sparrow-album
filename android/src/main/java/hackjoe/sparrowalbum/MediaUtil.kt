@@ -2,6 +2,7 @@ package hackjoe.sparrowalbum
 
 import android.content.ContentUris
 import android.content.Context
+import android.content.Intent
 import android.provider.MediaStore
 
 /**
@@ -98,5 +99,17 @@ object MediaUtil {
      * 获取媒体类型
      */
     fun getMediaType(mimeType: String) = mimeType.split("/")[0]
+
+    /**
+     * 预览所有被选中媒体文件
+     * JS端可以直接调用该方法
+     */
+    fun previewSelectedMedias(context: Context) {
+        if (AlbumDataManager.getSelectedMedias().isNotEmpty()) {
+            val intent = Intent(context, PreviewImageActivity::class.java).apply {}
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        }
+    }
 
 }
