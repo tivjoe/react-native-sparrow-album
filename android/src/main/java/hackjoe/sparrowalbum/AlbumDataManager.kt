@@ -76,7 +76,7 @@ class AlbumDataManager(context: Context) {
             "empty"
         } else {
             var mediaType = ""
-            for ((ket, value) in selectedMedias) {
+            for ((_, value) in selectedMedias) {
                 mediaType = MediaUtil.getMediaType(value.mimeType)
                 break
             }
