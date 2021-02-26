@@ -17,6 +17,17 @@ class AlbumDataManager(context: Context) {
         fun getSelectedMedias(): MutableMap<Long, AlbumItemData> {
             return selectedMedias
         }
+
+        /**
+         * 获取被选中的媒体数据
+         */
+        fun getSelectedMediasList(): MutableList<AlbumItemData> {
+            val selectedMediasList: MutableList<AlbumItemData> = mutableListOf()
+            selectedMedias.forEach {
+                selectedMediasList.add(it.value)
+            }
+            return selectedMediasList
+        }
     }
 
     init {

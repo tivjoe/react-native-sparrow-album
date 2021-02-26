@@ -105,8 +105,13 @@ object MediaUtil {
      * JS端可以直接调用该方法
      */
     fun previewSelectedMedias(context: Context) {
-        if (AlbumDataManager.getSelectedMedias().isNotEmpty()) {
-            val intent = Intent(context, PreviewImageActivity::class.java).apply {}
+        val selectedList = AlbumDataManager.getSelectedMediasList()
+        if (selectedList.size > 0) {
+            val intent = if (getMediaType(selectedList[0].mimeType) == "image") {
+                Intent(context, PreviewImageActivity::class.java).apply {}
+            } else {
+                Intent(context, PreviewVideoActivity::class.java).apply {}
+            }
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }

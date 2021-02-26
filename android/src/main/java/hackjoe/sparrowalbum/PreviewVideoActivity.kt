@@ -20,6 +20,7 @@ class PreviewVideoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_preview_video)
 
         // 从被选中的媒体
+        videoUri = AlbumDataManager.getSelectedMediasList()[0].uri
         // 初始化视图
         playerView = findViewById(R.id.player_view)
         playerControlView = findViewById(R.id.player_control_view)
