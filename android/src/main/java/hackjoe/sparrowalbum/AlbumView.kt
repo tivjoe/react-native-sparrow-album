@@ -1,12 +1,10 @@
 package hackjoe.sparrowalbum
 
 import android.content.Context
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.react.bridge.*
 import com.facebook.react.uimanager.events.RCTEventEmitter
-import java.util.*
 
 class AlbumView(context: Context) : RecyclerView(context) {
 
