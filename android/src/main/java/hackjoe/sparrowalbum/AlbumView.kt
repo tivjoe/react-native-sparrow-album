@@ -1,12 +1,12 @@
 package hackjoe.sparrowalbum
 
 import android.content.Context
+import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.ReactContext
-import com.facebook.react.bridge.WritableMap
+import com.facebook.react.bridge.*
 import com.facebook.react.uimanager.events.RCTEventEmitter
+import java.util.*
 
 class AlbumView(context: Context) : RecyclerView(context) {
 
@@ -41,8 +41,13 @@ class AlbumView(context: Context) : RecyclerView(context) {
 
     // 当被选中媒体数据发生变化时发送事件给js端
     fun emitEventChangeSelectedMedias() {
-        val event: WritableMap = Arguments.createMap()
-        event.putString("message", AlbumDataManager.getSelectedMedias().toString())
+        val rnSelectedMediasList = mutableListOf<WritableMap>()
+        AlbumDataManager.getSelectedMediasList().forEach {
+            rnSelectedMediasList.add(albumItemDataToRnObject(it))
+        }
+        val event: WritableMap = Arguments.createMap().apply {
+            putArray("message", Arguments.makeNativeArray(rnSelectedMediasList))
+        }
         val reactContext = context as ReactContext
         reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(id, RnEvent.EVENT_ON_CHANGE_SELECTED_MEDIAS, event)
     }

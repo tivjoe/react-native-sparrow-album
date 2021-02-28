@@ -3,7 +3,8 @@
     package="hackjoe.sparrowalbum">
 
     <application>
-        <activity android:name=".PreviewVideoActivity"></activity>
+        <activity android:name=".CropImageActivity"></activity>
+        <activity android:name=".PreviewVideoActivity" />
         <activity android:name=".PreviewImageActivity" />
     </application>
 

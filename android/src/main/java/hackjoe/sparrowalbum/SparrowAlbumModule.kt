@@ -24,4 +24,9 @@ class SparrowAlbumModule(private val reactContext: ReactApplicationContext) : Re
         MediaUtil.previewSelectedMedias(reactContext)
     }
 
+    @ReactMethod
+    fun cropImage(imageUri: String) {
+        MediaUtil.cropImage(reactContext, imageUri)
+    }
+
 }

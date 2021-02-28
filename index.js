@@ -9,7 +9,8 @@ export class SparrowAlbumView extends React.Component {
     }
 
     _onChangeSelectedMedias(event) {
-        console.log(event)
+        console.log(event.nativeEvent.message)
+        SparrowAlbum.cropImage(event.nativeEvent.message[0].uri)
     }
 
     render() {

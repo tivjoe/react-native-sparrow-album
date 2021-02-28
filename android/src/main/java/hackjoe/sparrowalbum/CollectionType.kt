@@ -1,6 +1,8 @@
 package hackjoe.sparrowalbum
 
 import android.net.Uri
+import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.WritableMap
 
 /**
  * @file 类型,接口等声明汇总
@@ -12,7 +14,7 @@ import android.net.Uri
  */
 data class AlbumItemData(
         val id: Long,
-        val uri: Uri,
+        var uri: Uri,
         val name: String,
         val width: Int,
         val height: Int,
@@ -20,6 +22,22 @@ data class AlbumItemData(
         val duration: Int?,
         val createDate: Long
 )
+
+/**
+ * 返回给rn的item数据模型
+ */
+fun albumItemDataToRnObject(item: AlbumItemData): WritableMap {
+    return Arguments.createMap().apply {
+        putInt("id", item.id.toInt())
+        putString("uri", item.uri.toString())
+        putString("name", item.name)
+        putInt("width", item.width)
+        putInt("height", item.height)
+        putString("mimeType", item.mimeType)
+        item.duration?.let { putInt("duration", it) }
+        putInt("createDate", item.createDate.toInt())
+    }
+}
 
 /**
  * Rn事件名

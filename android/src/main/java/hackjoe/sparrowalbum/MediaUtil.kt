@@ -1,8 +1,11 @@
 package hackjoe.sparrowalbum
 
 import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.provider.MediaStore
 
 /**
@@ -115,6 +118,41 @@ object MediaUtil {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
+    }
+
+    /**
+     * 剪裁图片
+     */
+    fun cropImage(context: Context, imageUri: String) {
+        val intent = Intent(context, CropImageActivity::class.java).apply {
+            putExtra("IMAGE_URI", imageUri)
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
+    }
+
+    /**
+     * 将Bitmap保存到相册
+     */
+    fun saveBitmapToAlbum(context: Context, bitmap: Bitmap): Uri? {
+        val imageDetails = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, System.currentTimeMillis().toString())
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+        }
+        val imageContentUri = context.contentResolver.insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                imageDetails
+        )
+        if (imageContentUri != null) {
+            context.contentResolver.openOutputStream(imageContentUri).use {
+                it ?: return null
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+            }
+            imageDetails.clear()
+            context.contentResolver.update(imageContentUri, imageDetails, null, null)
+            return imageContentUri
+        }
+        return null
     }
 
 }
