@@ -107,10 +107,9 @@ object MediaUtil {
      * 预览所有被选中媒体文件
      * JS端可以直接调用该方法
      */
-    fun previewSelectedMedias(context: Context) {
-        val selectedList = AlbumDataManager.getSelectedMediasList()
-        if (selectedList.size > 0) {
-            val intent = if (getMediaType(selectedList[0].mimeType) == "image") {
+    fun previewMedias(context: Context, medias: List<AlbumItemData>) {
+        if (medias.isNotEmpty()) {
+            val intent = if (getMediaType(medias[0].mimeType) == "image") {
                 Intent(context, PreviewImageActivity::class.java).apply {}
             } else {
                 Intent(context, PreviewVideoActivity::class.java).apply {}
@@ -153,6 +152,20 @@ object MediaUtil {
             return imageContentUri
         }
         return null
+    }
+
+    /**
+     * TODO 压缩图片
+     */
+    fun compressImage() {
+
+    }
+
+    /**
+     * TODO 压缩视频
+     */
+    fun compressVideo() {
+
     }
 
 }

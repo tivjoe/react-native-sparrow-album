@@ -24,6 +24,13 @@ data class AlbumItemData(
 )
 
 /**
+ * Rn事件名
+ */
+object RnEvent {
+    const val EVENT_ON_CHANGE_SELECTED_MEDIAS = "sparrow_album_change_selected_medias"
+}
+
+/**
  * 返回给rn的item数据模型
  */
 fun albumItemDataToRnObject(item: AlbumItemData): WritableMap {
@@ -37,11 +44,4 @@ fun albumItemDataToRnObject(item: AlbumItemData): WritableMap {
         item.duration?.let { putInt("duration", it) }
         putInt("createDate", item.createDate.toInt())
     }
-}
-
-/**
- * Rn事件名
- */
-object RnEvent {
-    const val EVENT_ON_CHANGE_SELECTED_MEDIAS = "sparrow_album_change_selected_medias"
 }

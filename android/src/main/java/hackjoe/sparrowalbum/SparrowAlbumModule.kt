@@ -1,8 +1,7 @@
 package hackjoe.sparrowalbum
 
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
+import com.facebook.react.bridge.*
+import java.lang.Exception
 
 class SparrowAlbumModule(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
@@ -15,18 +14,30 @@ class SparrowAlbumModule(private val reactContext: ReactApplicationContext) : Re
     }
 
     override fun getConstants(): MutableMap<String, Any> {
-        val constants: MutableMap<String, Any> = mutableMapOf()
-        return constants
+        return mutableMapOf()
     }
 
     @ReactMethod
     fun previewSelectedMedias() {
-        MediaUtil.previewSelectedMedias(reactContext)
+        MediaUtil.previewMedias(reactContext, AlbumDataManager.getSelectedMediasList())
     }
 
     @ReactMethod
     fun cropImage(imageUri: String) {
         MediaUtil.cropImage(reactContext, imageUri)
+    }
+
+    @ReactMethod
+    fun confirmSelected(promise: Promise) {
+        try {
+            val returnList = mutableListOf<WritableMap>()
+            AlbumDataManager.getSelectedMediasList().forEach {
+                returnList.add(albumItemDataToRnObject(it))
+            }
+            promise.resolve(Arguments.makeNativeArray(returnList))
+        } catch (e: Exception) {
+            promise.reject("Error", e);
+        }
     }
 
 }

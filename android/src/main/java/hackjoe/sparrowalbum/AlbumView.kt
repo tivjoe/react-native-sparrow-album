@@ -39,12 +39,12 @@ class AlbumView(context: Context) : RecyclerView(context) {
 
     // 当被选中媒体数据发生变化时发送事件给js端
     fun emitEventChangeSelectedMedias() {
-        val rnSelectedMediasList = mutableListOf<WritableMap>()
+        val returnList = mutableListOf<WritableMap>()
         AlbumDataManager.getSelectedMediasList().forEach {
-            rnSelectedMediasList.add(albumItemDataToRnObject(it))
+            returnList.add(albumItemDataToRnObject(it))
         }
         val event: WritableMap = Arguments.createMap().apply {
-            putArray("message", Arguments.makeNativeArray(rnSelectedMediasList))
+            putArray("message", Arguments.makeNativeArray(returnList))
         }
         val reactContext = context as ReactContext
         reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(id, RnEvent.EVENT_ON_CHANGE_SELECTED_MEDIAS, event)

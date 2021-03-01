@@ -5,11 +5,25 @@ import { SparrowAlbum, SparrowAlbumView } from 'react-native-sparrow-album'
 const App = () => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#c7c7c7' }} >
-            <Pressable onPress={() => SparrowAlbum.previewSelectedMedias()} >
-                <View style={[styles.button, { backgroundColor: 'blue' }]} >
-                    <Text style={styles.text} >预览</Text>
-                </View>
-            </Pressable>
+            <View style={{ flexDirection: 'row' }} >
+                <Pressable onPress={() => SparrowAlbum.previewSelectedMedias()} >
+                    <View style={[styles.button, { backgroundColor: 'blue' }]} >
+                        <Text style={styles.text} >预览</Text>
+                    </View>
+                </Pressable>
+                <Pressable onPress={async () => {
+                    try {
+                        const res = await SparrowAlbum.confirmSelected()
+                        console.log(res)
+                    } catch (e) {
+                        console.log(e)
+                    }
+                }} >
+                    <View style={[styles.button, { backgroundColor: 'red' }]} >
+                        <Text style={styles.text} >确定</Text>
+                    </View>
+                </Pressable>
+            </View>
             <SparrowAlbumView />
         </SafeAreaView>
     )
